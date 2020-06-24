@@ -1,6 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Store",
+    "\\Store\\App",
+    "\\Store\\DataManager"
   ],
+  "SelectedNode": "\\Store\\App\\Store.cs",
   "PreviewInSolutionExplorer": false
 }

@@ -24,7 +24,7 @@
         public static List<Order> Order { get; set; }
     }
 
-    public partial class Customer
+    public partial class Customer : AbstractData
     {
         [JsonProperty("Name")]
         public string Name { get; set; }
@@ -33,7 +33,7 @@
         public string Location { get; set; }
     }
 
-    public partial class Location
+    public partial class Location : AbstractData
     {
         [JsonProperty("Name")]
         public string Name { get; set; }
@@ -45,12 +45,12 @@
         public Inventory Inventory { get; set; }
     }
 
-    public partial class Inventory
+    public partial class Inventory : AbstractData
     {
        public Dictionary<string,int> Items { get; set; }
     }
 
-    public partial class Order
+    public partial class Order : AbstractData
     {
         [JsonProperty("Name")]
         public string Customer { get; set; }
@@ -65,7 +65,7 @@
         public int Id { get; set; }
     }
 
-    public partial class Product
+    public partial class Product : AbstractData
     {
         [JsonProperty("Name")]
         public string Name { get; set; }

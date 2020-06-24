@@ -2,23 +2,23 @@
 
 namespace StoreApp
 {
-    public class Location
+    public class Location: FindOne<Order>
     {
-    static public bool  CheckInventory(DTO.Order o)
+        /// <summary>
+        /// Checks inventory based on DTO.Order.Location
+        /// </summary>
+        /// <param>DTO.Order order, DBO DB</param>
+        static public bool CheckInventory(DTO.Order o, DBO DB)
         {
             //Find the store/check inventory levels
-            DTO.Location L = DTO.Data.Location.Find(
-                delegate (DTO.Location l)
-                {
-                    return l.Name == o.Location;
-                });
+            DTO.Location L = DB.Find(new DTO.Location() { name = o.Location });
             //Create new Inventory object to swap with our previous inventory
             DTO.Inventory I = new DTO.Inventory();
             //Go through the keys on our inventory for order and location to make sure proper qty
             foreach (var entry in o.Items.Items.Keys)
             {
                 var qty = L.Inventory.Items[entry] - o.Items.Items[entry];
-                if (qty >= 0? ) {
+                if (qty >= 0) {
                     I.Items[entry] = L.Inventory.Items[entry] - o.Items.Items[entry];
                 }
                 else if(qty < 0)
@@ -28,11 +28,11 @@ namespace StoreApp
             }
             if(I.Items.Keys.Count == L.Inventory.Items.Keys.Count)
             {
-                //Swap our new inventory for our old
+                //Swap new inventory for old
                 L.Inventory = I;
                 return true;
             }
-            return false;
+            throw(UnavailableResourcesException);
         }
     }
 
