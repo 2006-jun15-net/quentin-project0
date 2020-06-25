@@ -73,14 +73,15 @@
         [JsonProperty("Description")]
         public string Description { get; set; }
     }
-    public class Action
+    public class Action<T>
     {
-        public string endpoint;
-        public string arguments;
+        public T Payload;
+        public string Endpoint;
+        public string Action;
     }
-    public class Response
+    public class Response<T>
     {
-        public bool status;
+        public T Payload;
         public string message;
     }
 }

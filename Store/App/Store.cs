@@ -8,6 +8,7 @@ namespace StoreApp
     public class Store
     {
         private DBO DB;
+        private Router router;
         //TO DO Make this take in a config file
         //<summary>
         //Reads json data and creates a new DBO object
@@ -15,7 +16,7 @@ namespace StoreApp
         //<param></param>
         private void LoadData() 
         {
-            JObject obj = DataManager.DataManager.DeserializeJSON("../data.json");
+            JObject obj = DataManager.DeserializeJSON("../data.json");
             DTO.DTO dto = obj.ToObject<DTO.DTO>();
             this.DB = DBO(dto);
         }
@@ -25,17 +26,17 @@ namespace StoreApp
         //<param></param>
         private void Save() 
         {
-            DataManager.DataManager.SerializeJSON("../data.json", this.DB);
+            DataManager.SerializeJSON("../data.json", this.DB);
         }
         //<summary>
         //The ways users interact with the store via DTO.action objects
         //</summary>
-        //<param></param>
-        public DTO.Response Action(DTO.Action action)
+        //<param>DTO.Action action</param>
+        public DTO.Response Route(DTO.Action action)
         {
             //To do catch if method does not exist and throw a usage error back of options
-            var data = Utils.ReflectActionToString(action.endpoint, action.arguments);
-            return data;
+            Type t = Router[action.Endpoint];
+            var r = t.GetMethod(action.action).Invoke(null, new object[]{action.payload});
         }
     }
 }

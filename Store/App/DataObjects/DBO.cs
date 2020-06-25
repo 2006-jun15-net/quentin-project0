@@ -33,10 +33,8 @@ public class DBO
     /// Generic Find Function, this overload finds a function from a DTO.Customer if has name field
     /// </summary>
     /// <param>DTO.Customer</param>
-    public DTO.Customer Find(DTO.Customer c)
-    {
-        this.data.Customer.Select(C => c.Name == C.Name);
-    }
+    public DTO.Customer Find(DTO.Customer c) => this.data.Customer.Select(C => c.Name == C.Name);
+
     /// <summary>
     /// Generic Find Function, Find order or order history based on the DTO.Order field provided
     /// </summary>
