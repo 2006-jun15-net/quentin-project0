@@ -6,11 +6,7 @@ using App.DataAccess.Entities;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Linq.Dynamic;
-/*
- * 
- * Yanked from https://dotnettutorials.net/lesson/generic-repository-pattern-csharp-mvc/
- * 
- */
+
 namespace App.DataAccess
 {
     public class GenericRepository<T>  where T : class
