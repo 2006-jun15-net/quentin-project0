@@ -1,5 +1,0 @@
- dotnet ef dbcontext scaffold "Server=tcp:qbob.database.windows.net,1433;Initial Catalog=MyDB;Persist Security Info=False;User ID=qbob;Password=Simpleidea31;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
-"               Microsoft.EntityFrameworkCore.SqlServer
-               --startup-project ./App.DataAccess.csproj 
-               --force
-               --output-dir ./Entities
