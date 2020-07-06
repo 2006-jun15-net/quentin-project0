@@ -5,36 +5,62 @@ using Microsoft.EntityFrameworkCore;
 using App.DataAccess.Entities;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Linq.Dynamic;
-/*
- * 
- * Yanked from https://dotnettutorials.net/lesson/generic-repository-pattern-csharp-mvc/
- * 
- */
+using System.Linq.Dynamic.Core;
+
 namespace App.DataAccess
 {
     public class GenericRepository<T>  where T : class
     {
+        private static readonly DbContextOptions<MyDBContext> Options = new DbContextOptionsBuilder<MyDBContext>()
+            .UseSqlServer(App.DataAccess.SQLConfig.ConnectionString)
+            .Options;
+
         private DbContext _context = null;
         private DbSet<T> table = null;
+        public DbContext DB => _context;
+        /*
+        <summary>
+        Create a db connection of Type T
+        </summary>
+        */
         public GenericRepository()
         {
-            this._context = new MyDBContext();
+            this._context = new MyDBContext(Options);
             table = _context.Set<T>();
         }
+        /*
+        <summary>
+        Create a db connection of Type T, given a context
+        </summary>
+        */
         public GenericRepository(DbContext _context)
         {
             this._context = _context;
             table = _context.Set<T>();
         }
+        /*
+        <summary>
+       Return current table of T to list
+        </summary>
+        */
         public IEnumerable<T> GetAll()
         {
             return table.ToList();
         }
+        /*
+        <summary>
+       Return record given ID
+        </summary>
+        */
         public T GetById(object id)
         {
             return table.Find(id);
         }
+        /*
+        <summary>
+        Insert a record
+        </summary>
+        */
         public void Insert(T obj)
         {
             table.Add(obj);
@@ -48,9 +74,13 @@ namespace App.DataAccess
         {
             return table.Where(f).ToList();
         }
-        public List<T> Where(string f)
+        public IQueryable<T> Where(string f)
         {
-            return table.Where(f).ToList();
+            return table.Where(f);
+        }
+        public List<T> Include(string s)
+        {
+            return table.Include(s).ToList();
         }
         public void Save()
         {

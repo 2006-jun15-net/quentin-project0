@@ -7,5 +7,6 @@
         public string Info { get; set; }
         public string[] QueryFields { get; set; }
         public bool MultiQuery = false;
+        public string Conversion { get; set; }
     }
 }
