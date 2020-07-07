@@ -1,0 +1,5 @@
+cat Product.sql > insert.sql
+cat Location.sql >> insert.sql
+cat Customer.sql >> insert.sql
+cat Inventory.sql >> insert.sql
+cat Order.sql >> insert.sql
